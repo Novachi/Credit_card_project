@@ -1,5 +1,11 @@
 package com.theveloper.creditcard
 
-class App {
-    fun main(vararg args: String[])
+object App {
+
+    @JvmStatic
+    fun main(args: Array<String>){
+
+    }
 }
+
+
