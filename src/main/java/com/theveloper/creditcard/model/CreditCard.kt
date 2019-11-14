@@ -1,24 +1,33 @@
 package com.theveloper.creditcard.model
 
-import com.theveloper.creditcard.exception.BelowMinimumValueException
-import java.lang.Exception
+import com.theveloper.creditcard.exception.CreditBelowMinimumException
+import com.theveloper.creditcard.exception.NotEnoughMoneyException
 import java.math.BigDecimal
 
-class CreditCard(private var balance: BigDecimal, limit:BigDecimal) {
-    var limit:BigDecimal = BigDecimal.ZERO
-    private set(newLimit){
-        if(newLimit >= BigDecimal(100)){
-            field = newLimit
-        } else {
-            throw BelowMinimumValueException("Limit cannot be below 100")
+internal class CreditCard(private val cardNumber: String) {
+    var limit: BigDecimal? = null
+        private set
+    private val slogan: String? = null
+    private var cardBalance: BigDecimal? = null
+
+    fun assignLimit(newLimit: BigDecimal) {
+        if (BigDecimal.valueOf(100).compareTo(newLimit) == 1) {
+            throw CreditBelowMinimumException("Unlucky sytuacja ")
         }
+
+        limit = newLimit
+        cardBalance = limit
     }
 
-    init {
-        this.limit = limit
+    fun withdraw(money: BigDecimal) {
+        if (currentBalance()!!.compareTo(money) == -1) {
+            throw NotEnoughMoneyException()
+        }
+
+        cardBalance = cardBalance!!.subtract(money)
     }
 
-    fun assignLimit(value: BigDecimal){
-        this.limit = value
+    fun currentBalance(): BigDecimal? {
+        return cardBalance
     }
 }
