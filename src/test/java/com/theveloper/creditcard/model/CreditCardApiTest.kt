@@ -26,7 +26,7 @@ class CreditCardApiTest {
     }
 
     private fun thereIsCCApi() {
-        api = CreditCardFacade()
+        api = CreditCardFacade(inMemoryCCStorage)
     }
 
     private fun thereIsCreditCard() {
